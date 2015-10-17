@@ -10,7 +10,6 @@ echo "192.168.50.40 lamp" >> /etc/hosts
 echo "192.168.50.4 nagios" >> /etc/hosts
 echo "192.168.50.2 puppet" >> /etc/hosts
 cp -avr /etc/puppet/environments/example_env/ /etc/puppet/environments/production
-#cp /vagrant/puppet_srv.conf /etc/puppet/puppet.conf
 echo "Prepare puppet.conf"
 sed -i".bak" '/^templatedir=.*/d' /etc/puppet/puppet.conf
 echo "" >>/etc/puppet/puppet.conf
@@ -51,12 +50,3 @@ sudo -u postgres psql puppetdb -c 'create extension pg_trgm'
 /etc/init.d/puppetdb start
 /etc/init.d/puppetmaster start
 /etc/init.d/postgresql start
-#sudo -u postgres sh
-#createuser -DRSP puppetdb
-#createdb -E UTF8 -O puppetdb puppetdb
-#psql puppetdb -c 'create extension pg_trgm'
-#exit
-
-
-
-
