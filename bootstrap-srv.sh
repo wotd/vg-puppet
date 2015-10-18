@@ -3,7 +3,7 @@
 wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb
 dpkg -i puppetlabs-release-trusty.deb
 apt-get update
-locale-gen pl_PL pl_PL.UTF-8 
+locale-gen pl_PL pl_PL.UTF-8
 dpkg-reconfigure locales
 apt-get -y install puppetmaster postgresql-contrib puppetdb-terminus
 echo "192.168.50.40 lamp" >> /etc/hosts
@@ -13,7 +13,7 @@ cp -avr /etc/puppet/environments/example_env/ /etc/puppet/environments/productio
 echo "Prepare puppet.conf"
 sed -i".bak" '/^templatedir=.*/d' /etc/puppet/puppet.conf
 echo "" >>/etc/puppet/puppet.conf
-echo "storeconfigs = true" >> /etc/puppet/puppet.conf 
+echo "storeconfigs = true" >> /etc/puppet/puppet.conf
 echo "storeconfigs_backend = puppetdb" >> /etc/puppet/puppet.conf
 echo "reports = store,puppetdb" >> /etc/puppet/puppet.conf
 echo "Done!"
@@ -22,7 +22,8 @@ echo "[*] Apache2: "
 puppet module install puppetlabs-apache
 echo "[*] MySQL: "
 puppet module install puppetlabs-mysql
-cp -avr /vagrant/autonagios /etc/puppet/modules/
+echo "[*] stdlib: "
+puppet module install puppetlabs-stdlib
 echo "PuppetDB installation"
 puppet resource package puppetdb ensure=latest
 echo "Postresql config"
@@ -35,6 +36,7 @@ echo "PuppetDB config 3/4 ..."
 cp /vagrant/puppetdb.conf /etc/puppet/puppetdb.conf
 echo "PuppetDB config 4/4 ..."
 cp /vagrant/database.ini /etc/puppetdb/conf.d
+mkdir /etc/puppet/modules/autonagios
 chown -R puppet:puppet `sudo puppet config print confdir`
 echo "package {'puppetdb-terminus': ensure => installed, }" > /etc/puppet/manifests/site.pp
 echo "Setup Postresql database for puppetdb..."
@@ -42,7 +44,7 @@ echo "Setup Postresql database for puppetdb..."
 /etc/init.d/puppetmaster restart
 /etc/init.d/postgresql restart
 sudo -u postgres psql -c "create user \"puppetdb\" with password 'getstarted';"
-sudo -u postgres psql -c "create database \"puppetdb\" with owner \"puppetdb\";" 
+sudo -u postgres psql -c "create database \"puppetdb\" with owner \"puppetdb\";"
 sudo -u postgres psql puppetdb -c 'create extension pg_trgm'
 /etc/init.d/puppetdb stop
 /etc/init.d/puppetmaster stop

@@ -34,6 +34,7 @@ Vagrant.configure(2) do |config|
     puppet.vm.hostname = "puppet"
     puppet.vm.network "private_network", ip: "192.168.50.2"
     puppet.vm.provision :shell, path: "bootstrap-srv.sh"
+    puppet.vm.synced_folder "./modules/autonagios/", "/etc/puppet/modules/autonagios/", type: "rsync", rsync__exclude: ".git/"
     config.vm.provider "virtualbox" do |v|
       v.memory = 8192
 end
