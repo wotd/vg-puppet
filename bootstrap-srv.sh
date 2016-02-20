@@ -7,7 +7,7 @@ locale-gen pl_PL pl_PL.UTF-8
 dpkg-reconfigure locales
 apt-get -y install puppetmaster postgresql-contrib puppetdb-terminus
 echo "192.168.50.40 lamp" >> /etc/hosts
-echo "192.168.50.4 nagios" >> /etc/hosts
+echo "192.168.50.4 db" >> /etc/hosts
 echo "192.168.50.2 puppet" >> /etc/hosts
 cp -avr /etc/puppet/environments/example_env/ /etc/puppet/environments/production
 echo "Prepare puppet.conf"
@@ -17,6 +17,11 @@ echo "storeconfigs = true" >> /etc/puppet/puppet.conf
 echo "storeconfigs_backend = puppetdb" >> /etc/puppet/puppet.conf
 echo "reports = store,puppetdb" >> /etc/puppet/puppet.conf
 echo "Done!"
+echo "Changing modules location..."
+rm -rf /etc/puppet/modules
+rm -rf /etc/puppet/manifests
+ln -s /vagrant/modules /etc/puppet/
+ln -s /vagrant/manifests /etc/puppet/
 echo "Installing modules..."
 echo "[*] Apache2: "
 puppet module install puppetlabs-apache
@@ -36,7 +41,6 @@ echo "PuppetDB config 3/4 ..."
 cp /vagrant/puppetdb.conf /etc/puppet/puppetdb.conf
 echo "PuppetDB config 4/4 ..."
 cp /vagrant/database.ini /etc/puppetdb/conf.d
-mkdir /etc/puppet/modules/autonagios
 chown -R puppet:puppet `sudo puppet config print confdir`
 echo "package {'puppetdb-terminus': ensure => installed, }" > /etc/puppet/manifests/site.pp
 echo "Setup Postresql database for puppetdb..."

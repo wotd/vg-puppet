@@ -7,12 +7,11 @@ Vagrant.configure(2) do |config|
     web.vm.provision :shell, path: "bootstrap-lamp.sh"
   end
 
-  config.vm.define "nagios" do |nagios|
-    nagios.vm.box = "ubuntu/trusty64" #vm.box = "apache"#
-    nagios.vm.hostname = "nagios"
-    nagios.vm.network "private_network", ip: "192.168.50.4"
-    nagios.vm.network :forwarded_port, guest: 80, host: 8080
-    nagios.vm.provision :shell, path: "bootstrap-nagios.sh"
+  config.vm.define "db" do |db|
+    db.vm.box = "ubuntu/trusty64" #vm.box = "apache"#
+    db.vm.hostname = "db"
+    db.vm.network "private_network", ip: "192.168.50.4"
+    db.vm.provision :shell, path: "bootstrap-db.sh"
   end
 
   config.vm.define "puppet" do |puppet|
