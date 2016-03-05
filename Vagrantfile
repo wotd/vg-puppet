@@ -2,16 +2,16 @@
 Vagrant.configure(2) do |config|
   config.vm.define "web" do |web|
     web.vm.box = "ubuntu/trusty64" #vm.box = "apache"#
-    web.vm.hostname = "lamp"
+    web.vm.hostname = "ubuntu"
     web.vm.network "private_network", ip: "192.168.50.40"
-    web.vm.provision :shell, path: "bootstrap-lamp.sh"
+    web.vm.provision :shell, path: "bootstrap-ubuntu.sh"
   end
 
   config.vm.define "db" do |db|
-    db.vm.box = "ubuntu/trusty64" #vm.box = "apache"#
-    db.vm.hostname = "db"
+    db.vm.box = "centos/7" #vm.box = "apache"#
+    db.vm.hostname = "centos"
     db.vm.network "private_network", ip: "192.168.50.4"
-    db.vm.provision :shell, path: "bootstrap-db.sh"
+    db.vm.provision :shell, path: "bootstrap-centos.sh"
   end
 
   config.vm.define "puppet" do |puppet|
