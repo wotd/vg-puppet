@@ -6,7 +6,8 @@ apt-get update
 locale-gen pl_PL pl_PL.UTF-8
 dpkg-reconfigure locales
 apt-get -y install puppetmaster postgresql-contrib puppetdb-terminus
-echo "192.168.50.40 lamp" >> /etc/hosts
+echo "192.168.50.40 ubuntu" >> /etc/hosts
+echo "192.168.50.50 nagios" >> /etc/hosts
 echo "192.168.50.4 db" >> /etc/hosts
 echo "192.168.50.2 puppet" >> /etc/hosts
 cp -avr /etc/puppet/environments/example_env/ /etc/puppet/environments/production

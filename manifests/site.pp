@@ -1,5 +1,6 @@
 package {'puppetdb-terminus': ensure => installed, }
 
+
 case $operatingsystem {
 	'CentOS': {
 		$packages = [
@@ -13,8 +14,14 @@ case $operatingsystem {
 	}
 }
 
+node 'nagios' {
+	include nagios3::server
+}
 
-
+node 'ubuntu' {
+	include apache
+	class {'nagios3::client':	}
+}
 package { "$packages":
 	ensure => installed,
 }

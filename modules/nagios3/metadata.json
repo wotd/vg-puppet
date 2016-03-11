@@ -1,0 +1,14 @@
+{
+  "name": "wotd-nagios3",
+  "version": "0.1.0",
+  "author": "wotd",
+  "summary": "This module is for managing nagios3 using puppet",
+  "license": "Apache 2.0",
+  "source": "github",
+  "project_page": "only github i guess",
+  "issues_url": "github",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+
