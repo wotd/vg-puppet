@@ -41,12 +41,13 @@ class nagios3 (
   $checktime_period       = $nagios3::params::checktime_period,
   $contact_group_name     = $nagios3::params::contact_group_name,
   $contact_group_members  = $nagios3::params::contact_group_members,
-  $apache_check            = $nagios3::params::apache_check,
-  $apaches_check           = $nagios3::params::apaches_check,
+  $apache_check           = $nagios3::params::apache_check,
+  $apaches_check          = $nagios3::params::apaches_check,
   $apache_warn_min_procs  = $nagios3::params::apache_warn_min_procs,
   $apache_warn_max_procs  = $nagios3::params::apache_warn_max_procs,
   $apache_crit_min_procs  = $nagios3::params::apache_crit_min_procs,
-  $apache_crit_max_procs  = $nagios3::params::apache_crit_max_procs
+  $apache_crit_max_procs  = $nagios3::params::apache_crit_max_procs,
+  $mysql_check            = $nagios3::params::mysql_check
   ) inherits nagios3::params {
 
     include 'nagios3::client'

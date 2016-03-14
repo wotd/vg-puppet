@@ -8,10 +8,13 @@ class nagios3::params {
   #Checks Params
   $contact_group          = 'hosting-cs'
   $checktime_period       = '24x7'
+  #APACHE
   $apache_check           = 'present'
   $apaches_check          = 'present'
   $apache_warn_min_procs  = '5'
   $apache_warn_max_procs  = '20'
   $apache_crit_min_procs  = '2'
   $apache_crit_max_procs  = '21'
+  #MYSQL
+  $mysql_check            = 'present'
 }
