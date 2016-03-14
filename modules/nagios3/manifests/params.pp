@@ -25,4 +25,6 @@ class nagios3::params {
   $ps_crit_max_procs      = '11'
   #RABBITMQ
   $rabbitmq_check         = 'present'
+  #VARNISH
+  $varnish_check          = 'present'
 }
