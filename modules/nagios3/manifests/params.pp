@@ -1,4 +1,5 @@
-#
+#TODO - port checks should be able to auto-delete
+#TODO - move entries from nrpe.cfg to nrpe_local.cfg
 class nagios3::params {
   #Client Params
   $nagios_server_ip       = "192.168.50.50"
@@ -29,4 +30,6 @@ class nagios3::params {
   $varnish_check          = 'present'
   #SMTP
   $smtp_check             = 'present'
+  #CASSANDRA
+  $cassandra_check        = 'present'
 }
