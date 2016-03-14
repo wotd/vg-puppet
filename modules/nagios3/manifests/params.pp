@@ -17,4 +17,10 @@ class nagios3::params {
   $apache_crit_max_procs  = '21'
   #MYSQL
   $mysql_check            = 'present'
+  #POSTGRESQL
+  $postgresql_check       = 'present'
+  $ps_warn_min_procs      = '3'
+  $ps_warn_max_procs      = '8'
+  $ps_crit_min_procs      = '0'
+  $ps_crit_max_procs      = '11'
 }

@@ -47,7 +47,12 @@ class nagios3 (
   $apache_warn_max_procs  = $nagios3::params::apache_warn_max_procs,
   $apache_crit_min_procs  = $nagios3::params::apache_crit_min_procs,
   $apache_crit_max_procs  = $nagios3::params::apache_crit_max_procs,
-  $mysql_check            = $nagios3::params::mysql_check
+  $mysql_check            = $nagios3::params::mysql_check,
+  $postgresql_check       = $nagios3::params::postgresql_check,
+  $ps_warn_min_procs      = $nagios3::params::ps_warn_min_procs,
+  $ps_warn_max_procs      = $nagios3::params::ps_warn_max_procs,
+  $ps_crit_min_procs      = $nagios3::params::ps_crit_min_procs,
+  $ps_crit_max_procs      = $nagios3::params::ps_crit_max_procs
   ) inherits nagios3::params {
 
     include 'nagios3::client'
