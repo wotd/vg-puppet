@@ -8,4 +8,13 @@ class nagios3::server::config {
     require =>  Class['nagios3::server::install'],
     notify  =>  Service['nagios3'],
   }
+
+#Set nagiosadmin password to "2" - it is only for testing purpose and should be changed by executing command: htpasswd /etc/nagios3/htpasswd.users nagiosadmin
+  file { '/etc/nagios3/htpasswd.users':
+    ensure  => 'present',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '664',
+    content => 'nagiosadmin:$apr1$SvKSmmfk$0eSwvBlxJKqWLWICKcVNq1',
+    }
 }

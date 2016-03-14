@@ -8,5 +8,4 @@ class nagios3::server::install {
   package { $packages:
     ensure => 'installed',
     }
-
 }

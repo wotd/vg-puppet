@@ -35,7 +35,29 @@
 #
 # Copyright 2016 Your name here, unless otherwise noted.
 #
-class nagios3 {
-#include nagios3::server
+class nagios3 (
+  $nagios_server_ip       = $nagios3::params::nagios_server_ip,
+  $contact_group          = $nagios3::params::contact_group,
+  $checktime_period       = $nagios3::params::checktime_period,
+  $contact_group_name     = $nagios3::params::contact_group_name,
+  $contact_group_members  = $nagios3::params::contact_group_members,
+  $http_ensure            = $nagios3::params::http_ensure,
+  $https_ensure           = $nagios3::params::https_ensure,
+  $apache_warn_min_procs  = $nagios3::params::apache_warn_min_procs,
+  $apache_warn_max_procs  = $nagios3::params::apache_warn_max_procs,
+  $apache_crit_min_procs  = $nagios3::params::apache_crit_min_procs,
+  $apache_crit_max_procs  = $nagios3::params::apache_crit_max_procs
+  ) inherits nagios3::params {
+
+    include 'nagios3::client'
+    include 'nagios3::checks'
+
+    anchor { 'nagios3::start': }
+    anchor { 'nagios3::end': }
+
+    Anchor['nagios3::start'] ->
+    Class['nagios3::client'] ->
+    Class['nagios3::checks'] ->
+    Anchor['nagios3::end']
 
 }
