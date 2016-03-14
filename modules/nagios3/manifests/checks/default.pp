@@ -95,12 +95,6 @@ class nagios3::checks::default (
     target              => "/etc/nagios3/conf.d/autonagios_service.cfg",
 }
 
-  file { '/usr/lib/nagios/plugins/check_puppet.rb':
-    ensure  => 'present',
-    source  => 'puppet:///modules/nagios3/check_puppet.rb',
-    mode    => '755',
-}
-
   @@nagios_service { "check_puppet_${hostname}":
     ensure              => 'present',
     check_command       => "check_nrpe_1arg!check_puppet",

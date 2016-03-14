@@ -27,4 +27,5 @@ class nagios3::checks::cassandra (
     max_check_attempts  => '10',
     target              => "/etc/nagios3/conf.d/autonagios_service.cfg",
 }
+  Class['nagios3::client::install'] -> Class['nagios3::checks::cassandra']
 }

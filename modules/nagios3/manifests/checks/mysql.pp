@@ -6,7 +6,7 @@ class nagios3::checks::mysql (
   file_line { 'check_procs_mysql':
     ensure => "$mysql_check",
     line   => 'command[check_procs_mysql]=/usr/lib/nagios/plugins/check_procs -w 1:1 -c 1:3 -C mysqld',
-    path   => '/etc/nagios/nrpe.cfg',
+    path   => '/etc/nagios/nrpe_local.cfg',
     notify => Service['nagios-nrpe-server'],
 }
 
@@ -42,5 +42,5 @@ class nagios3::checks::mysql (
   contact_groups      => "$contact_group",
   target              => "/etc/nagios3/conf.d/autonagios_service.cfg",
 }
-
+  Class['nagios3::client::install'] -> Class['nagios3::checks::mysql']
 }

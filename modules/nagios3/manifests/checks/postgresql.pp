@@ -10,7 +10,7 @@ class nagios3::checks::postgresql (
   file_line { 'check_procs_postgresql':
     ensure  => "$postgresql_check",
     line    => "command[check_procs_postgresqld]=/usr/lib/nagios/plugins/check_procs -w $ps_warn_min_procs:$ps_warn_max_procs -c $ps_crit_min_procs:$ps_crit_max_procs -C postgres",
-    path    => '/etc/nagios/nrpe.cfg',
+    path    => '/etc/nagios/nrpe_local.cfg',
     notify  => Service['nagios-nrpe-server'],
     match   => '^command\[check_procs_postgresqld\]=\/usr\/lib\/nagios\/plugins\/check_procs -w \d*:\d* -c \d*:\d* -C postgres',
 }
@@ -41,5 +41,5 @@ class nagios3::checks::postgresql (
     contact_groups      => "$contact_group",
     target              => "/etc/nagios3/conf.d/autonagios_service.cfg",
 }
-
+  Class['nagios3::client::install'] -> Class['nagios3::checks::postgresql']
 }

@@ -56,7 +56,8 @@ class nagios3 (
   $rabbitmq_check         = $nagios3::params::rabbitmq_check,
   $varnish_check          = $nagios3::params::varnish_check,
   $smtp_check             = $nagios3::params::smtp_check,
-  $cassandra_check        = $nagios3::params::cassandra_check
+  $cassandra_check        = $nagios3::params::cassandra_check,
+  $port_check             = $nagios3::params::port_check
   ) inherits nagios3::params {
 
     include 'nagios3::client'

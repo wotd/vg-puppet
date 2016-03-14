@@ -32,4 +32,6 @@ class nagios3::params {
   $smtp_check             = 'present'
   #CASSANDRA
   $cassandra_check        = 'present'
+  #Port
+  $port_check             = 'present'
 }

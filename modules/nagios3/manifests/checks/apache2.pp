@@ -25,7 +25,7 @@ class nagios3::checks::apache2 (
    file_line { 'check_procs_web':
     ensure  => "$apache_check",
     line    => "command[check_procs_web]=/usr/lib/nagios/plugins/check_procs -w $apache_warn_min_procs:$apache_warn_max_procs -c $apache_crit_min_procs:$apache_crit_max_procs -C apache2",
-    path    => '/etc/nagios/nrpe.cfg',
+    path    => '/etc/nagios/nrpe_local.cfg',
     notify  => Service['nagios-nrpe-server'],
     match   => '^command\[check_procs_web\]=\/usr\/lib\/nagios\/plugins\/check_procs -w \d*:\d* -c \d*:\d* -C apache2',
   }
@@ -55,4 +55,5 @@ class nagios3::checks::apache2 (
      max_check_attempts  => '10',
      target              => "/etc/nagios3/conf.d/autonagios_service.cfg",
 }
+  Class['nagios3::client::install'] -> Class['nagios3::checks::apache2']
 }

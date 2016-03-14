@@ -6,7 +6,7 @@ class nagios3::checks::varnish (
   file_line { 'check_procs_varnish':
     ensure => "$varnish_check",
     line   => 'command[check_procs_varnish]=/usr/lib/nagios/plugins/check_procs -w 2:2 -c 2:4 -C varnishd',
-    path   => '/etc/nagios/nrpe.cfg',
+    path   => '/etc/nagios/nrpe_local.cfg',
     notify => Service['nagios-nrpe-server'],
 }
 
@@ -48,5 +48,5 @@ class nagios3::checks::varnish (
     contact_groups      => "$contact_group",
     target              => "/etc/nagios3/conf.d/autonagios_service.cfg",
 }
-
+  Class['nagios3::client::install'] -> Class['nagios3::checks::varnish']
 }
