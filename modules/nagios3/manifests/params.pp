@@ -8,8 +8,8 @@ class nagios3::params {
   #Checks Params
   $contact_group          = 'hosting-cs'
   $checktime_period       = '24x7'
-  $http_ensure            = 'present'
-  $https_ensure           = 'present'
+  $apache_check           = 'present'
+  $apaches_check          = 'present'
   $apache_warn_min_procs  = '5'
   $apache_warn_max_procs  = '20'
   $apache_crit_min_procs  = '2'
