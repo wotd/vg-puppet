@@ -3,7 +3,6 @@ define nagios3::checks::port (
   $check_name    = $name,
   $contact_group = $nagios3::contact_group,
 ) {
-  notify {"check_port_${check_name}_${hostname}":}
   @@nagios_service { "check_port_${check_name}_${hostname}":
     ensure              => 'present',
     check_command       => "check_tcp!$port",
