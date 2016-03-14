@@ -23,4 +23,6 @@ class nagios3::params {
   $ps_warn_max_procs      = '8'
   $ps_crit_min_procs      = '0'
   $ps_crit_max_procs      = '11'
+  #RABBITMQ
+  $rabbitmq_check         = 'present'
 }
