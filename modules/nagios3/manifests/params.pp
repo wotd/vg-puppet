@@ -27,4 +27,6 @@ class nagios3::params {
   $rabbitmq_check         = 'present'
   #VARNISH
   $varnish_check          = 'present'
+  #SMTP
+  $smtp_check             = 'present'
 }
