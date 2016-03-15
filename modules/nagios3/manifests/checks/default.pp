@@ -126,4 +126,19 @@ class nagios3::checks::default (
     match   => '^command\[check_puppet\]=sudo \/usr\/lib\/nagios\/plugins\/check_puppet.rb -w \d* -c \d*',
 }
 
+  if $kernel == 'Linux' {
+    @@nagios_service { "SSH_${hostname}":
+      ensure              => 'present',
+      check_command       => "check_ssh",
+      use                 => 'generic-service',
+      contact_groups      => "$contact_group",
+      host_name           => "$fqdn",
+      notification_period => '24x7',
+      check_period        => '24x7',
+      service_description => "${hostname}_SSH",
+      max_check_attempts  => '10',
+      target              => "/etc/nagios3/conf.d/autonagios_service.cfg",
+    }
+  }
+
 }
