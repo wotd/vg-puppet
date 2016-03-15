@@ -63,7 +63,8 @@ class nagios3 (
   $hadoop_jt_check        = $nagios3::params::hadoop_jt_check,
   $hadoop_nn_check        = $nagios3::params::hadoop_nn_check,
   $hadoop_tt_check        = $nagios3::params::hadoop_tt_check,
-  $hadoop_2nn_check       = $nagios3::params::hadoop_2nn_check
+  $hadoop_2nn_check       = $nagios3::params::hadoop_2nn_check,
+  $tomcat_check           = $nagios3::params::tomcat_check
   ) inherits nagios3::params {
 
     include 'nagios3::client'
