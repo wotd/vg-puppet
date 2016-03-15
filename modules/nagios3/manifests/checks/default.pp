@@ -139,6 +139,14 @@ class nagios3::checks::default (
       max_check_attempts  => '10',
       target              => "/etc/nagios3/conf.d/autonagios_service.cfg",
     }
+    file_line { 'check_ntp_peer':
+      ensure  => 'present',
+      line    => '/usr/lib/nagios/plugins/check_ntp_peer -H localhost -w 1 -c 1800 -W 2 -C 5',
+      path    => '/etc/nagios/nrpe_local.cfg',
+      require => Class['nagios3::client::install'],
+      notify  => Service['nagios-nrpe-server'],
+      match   => '^command\[check_ntp_peer\]=sudo \/usr\/lib\/nagios\/plugins\/check_ntp_peer -w \d* -c \d* -W \d* -C \d*',
+    }
   }
 
 }
