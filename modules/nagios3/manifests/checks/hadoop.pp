@@ -47,5 +47,25 @@ class nagios3::checks::hadoop (
     path   => '/etc/nagios/nrpe_local.cfg',
     notify => Service['nagios-nrpe-server'],
   }
+  file_line { 'check_ntp_peer':
+    ensure  => 'present',
+    line    => 'command[check_ntp_peer]=/usr/lib/nagios/plugins/check_ntp_peer -H localhost -w 1 -c 1800 -W 2 -C 5',
+    path    => '/etc/nagios/nrpe_local.cfg',
+    require => Class['nagios3::client::install'],
+    notify  => Service['nagios-nrpe-server'],
+    match   => '^command\[check_ntp_peer\]=sudo \/usr\/lib\/nagios\/plugins\/check_ntp_peer -w \d* -c \d* -W \d* -C \d*',
+  }
+  @@nagios_service { "ntp_${hostname}":
+    ensure              => 'present',
+    check_command       => "check_nrpe_1arg!check_ntp_peer",
+    use                 => 'generic-service',
+    contact_groups      => "$contact_group",
+    host_name           => "$fqdn",
+    notification_period => '24x7',
+    check_period        => '24x7',
+    service_description => "${hostname}_NTP",
+    max_check_attempts  => '10',
+    target              => "/etc/nagios3/conf.d/autonagios_service.cfg",
+  }
   Class['nagios3::client::install'] -> Class['nagios3::checks::hadoop']
 }
