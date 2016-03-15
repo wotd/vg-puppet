@@ -34,4 +34,11 @@ class nagios3::params {
   $cassandra_check        = 'present'
   #Port
   $port_check             = 'present'
+  #HADOOP
+  $hadoop_lh_check        = 'present'
+  $hadoop_lm_check        = 'present'
+  $hadoop_jt_check        = 'present'
+  $hadoop_nn_check        = 'present'
+  $hadoop_tt_check        = 'present'
+  $hadoop_2nn_check       = 'present'
 }

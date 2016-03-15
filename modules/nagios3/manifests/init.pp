@@ -57,7 +57,13 @@ class nagios3 (
   $varnish_check          = $nagios3::params::varnish_check,
   $smtp_check             = $nagios3::params::smtp_check,
   $cassandra_check        = $nagios3::params::cassandra_check,
-  $port_check             = $nagios3::params::port_check
+  $port_check             = $nagios3::params::port_check,
+  $hadoop_lh_check        = $nagios3::params::hadoop_lh_check,
+  $hadoop_lm_check        = $nagios3::params::hadoop_lm_check,
+  $hadoop_jt_check        = $nagios3::params::hadoop_jt_check,
+  $hadoop_nn_check        = $nagios3::params::hadoop_nn_check,
+  $hadoop_tt_check        = $nagios3::params::hadoop_tt_check,
+  $hadoop_2nn_check       = $nagios3::params::hadoop_2nn_check
   ) inherits nagios3::params {
 
     include 'nagios3::client'
