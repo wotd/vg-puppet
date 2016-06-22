@@ -1,49 +1,16 @@
 package {'puppetdb-terminus': ensure => installed, }
 
-
-case $operatingsystem {
-	'CentOS': {
-		$packages = [
-		'wget',
-		]
-	}
-	'Ubuntu': {
-		$packages = [
-		'htop',
-		]
-	}
-}
-
 node 'nagios' {
-	class { 'nagios3::server':		}
+	include nagios3::server
 }
 
-node 'ubuntu' {
+node 'vagrant-ubuntu-trusty-64.toya.net.pl' {
 	include apache
-  include mysql::server
-	#include nagios3
-	class { 'nagios3': }
-
-  nagios3::checks::port { 'port80':
-    port  => 80,
+	class {'nagios3::client':	}
+  include nagios3::checks::apache2
+  nagios3::checks::port { 'webserver':  }
+  nagios3::checks::script { 'apache_lines':
+    check_warn => 60,
+    check_crit => 40
     }
-
-
-
-      include nagios3::checks::postgresql
-      include nagios3::checks::rabbitmq
-      include nagios3::checks::smtp
-      include nagios3::checks::cassandra
-
-	#include 'nagios3::client'
-	class { 'nagios3::checks::apache2':
-		apache_check	=> 'present',
-		apaches_check	=> 'present',
-		}
-  class { 'nagios3::checks::mysql':
-        mysql_check   => 'present',
-  }
-}
-package { "$packages":
-	ensure => installed,
 }

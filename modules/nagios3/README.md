@@ -15,12 +15,25 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+nagios3 module is puppet module that can be used to deploy and maintain nagios3 monitoring tool. It can be used to configure server and checks on particular hosts.
 
 ## Module Description
 
+nagios3 module can be used to:
+1. Install and perform initial configuration for nagios3 monitoring tool
+2. Configure checks for following servers and technologies:
+    * apache2
+    * cassandra
+    * hadoop
+    * mysql
+    * postgresql
+    * rabbitmq
+    * smtp
+    * tomcat
+    * varnish
+    * network port
+    * custom script
+    * default checks like disk space, cpu, puppet agent
 If applicable, this section should have a brief description of the technology
 the module integrates with and what that integration enables. This section
 should answer the questions: "What does this module *do*?" and "Why would I use

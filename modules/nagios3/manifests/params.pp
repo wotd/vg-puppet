@@ -43,4 +43,6 @@ class nagios3::params {
   $hadoop_2nn_check       = 'present'
   #TOMCAT
   $tomcat_check           = 'present'
+  #SCRIPT
+  $script_check           = 'present'
 }
