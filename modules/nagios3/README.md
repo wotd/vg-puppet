@@ -63,19 +63,22 @@ This will deploy server with following credentials:
   - Password: *2*
 
 To change password, use htpasswd manually and comment out section in nagios3/manifests/server/config.pp file.
-
 ```
 htpasswd /etc/nagios3/htpasswd.users nagiosadmin
 ```
-
 Now server is accessible on http://ip_address/nagios3
+
+All setting and checks configured by module are located in separated files:
+/etc/nagios3/conf.d/autonagios_contactgroups.cfg
+/etc/nagios3/conf.d/autonagios_hosts.cfg
+/etc/nagios3/conf.d/autonagios_service.cfg
 
 #### Client
 
 Following command will install and configure nrpe plugin. Please remember about updating params.pp file and configure IP address of nagios server you want to use. This IP will be whitelisted in nrpe configuration.
 
 ```
-include nagios3::client
+include nagios3
 ```
 
 This command will enable following checks:
@@ -88,6 +91,11 @@ This command will enable following checks:
   - check_puppet
   - check_ssh (if Linux)
 
+if you want install only nrpe client without enabling default checks use this command:
+```
+include nagios3::client
+```
+
 ## Usage
 
 All following classes can be declared like this:
@@ -95,6 +103,8 @@ All following classes can be declared like this:
 include nagios3::checks::apache2
 ```
 Or default values can be modified to suit your need.
+
+*It is important to apply puppet on client machine before applying it on nagios server.*
 
 ### apache2
 
