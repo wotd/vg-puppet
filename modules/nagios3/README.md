@@ -34,13 +34,7 @@ nagios3 module can be used to:
     * network port
     * custom script
     * default checks like disk space, cpu, puppet agent
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+3. Install plugins required by client machines to work with Nagios.
 
 ## Setup
 
@@ -53,40 +47,195 @@ management, etc.) this is the time to mention it.
 
 ### Setup Requirements **OPTIONAL**
 
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+N/A
 
 ### Beginning with nagios3
 
-The very basic steps needed for a user to get the module up and running.
+#### Server
 
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+To install nagios3 monitoring server just use following code:
+```
+include nagios3::server
+```
+
+This will deploy server with following credentials:
+  - Username: *nagiosadmin*
+  - Password: *2*
+
+To change password, use htpasswd manually and comment out section in nagios3/manifests/server/config.pp file.
+
+```
+htpasswd /etc/nagios3/htpasswd.users nagiosadmin
+```
+
+Now server is accessible on http://ip_address/nagios3
+
+#### Client
+
+Following command will install and configure nrpe plugin. Please remember about updating params.pp file and configure IP address of nagios server you want to use. This IP will be whitelisted in nrpe configuration.
+
+```
+include nagios3::client
+```
+
+This command will enable following checks:
+  - check_ping
+  - check_load
+  - check_total_procs
+  - check_zombie_procs
+  - check_users
+  - check_disk1
+  - check_puppet
+  - check_ssh (if Linux)
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
+All following classes can be declared like this:
+```
+include nagios3::checks::apache2
+```
+Or default values can be modified to suit your need.
+
+### apache2
+
+```
+class { 'nagios3::checks::apache2':
+    apache_check           => 'present',
+    apaches_check          => 'present',
+    apache_warn_min_procs  => '5',
+    apache_warn_max_procs  => '20',
+    apache_crit_min_procs  => '2',
+    apache_crit_max_procs  => '21'
+  }
+```
+
+### cassandra
+
+This check can be only disabled or enabled. In fact it is deploying script to check cassandra. Script can be found in files directory.
+```
+class { 'nagios3::checks::cassandra':
+  cassandra_check           => 'present'
+  }
+```
+
+### hadoop
+
+```
+class { 'nagios3::checks::hadoop':
+    hadoop_lh_check        => 'present',
+    hadoop_lm_check        => 'present',
+    hadoop_jt_check        => 'present',
+    hadoop_nn_check        => 'present',
+    hadoop_tt_check        => 'present',
+    hadoop_2nn_check       => 'present'
+  }
+```
+
+### mysql
+
+```
+  class { 'nagios3::checks::mysql':
+    mysql_check            => 'present'
+  }
+```
+### postgresql
+
+```
+class { 'nagios3::checks::postgresql':
+    postgresql_check       => 'present',
+    ps_warn_min_procs      => '3',
+    ps_warn_max_procs      => '8',
+    ps_crit_min_procs      => '0',
+    ps_crit_max_procs      => '11'
+  }
+```
+
+### rabbitmq
+
+```
+class { 'nagios3::checks::rabbitmq':
+    rabbitmq_check         => 'present'
+  }
+```
+
+### smtp
+
+```
+class { 'nagios3::checks::smtp':
+    smtp_check             => 'present'
+  }
+```
+
+### tomcat
+
+```
+class { 'nagios3::checks::tomcat':
+    tomcat_check           => 'present'
+  }
+```
+
+### varnish
+
+```
+class { 'nagios3::checks::varnish':
+    varnish_check          => 'present'
+  }
+```
+
+### network port
+
+```
+nagios3::checks::port { 'webserver':
+    port_check             => 'present',
+    port                   => '80',
+    contact_group          => 'hosting-cs'
+  }
+```
+
+### custom script
+
+Script has to be deployed in files directory. *script_name* is name of the file, *script_path* is path where script will be deployed. Name of this check (*apache_lines* in this example) will be added to nrpe file. Remember do delete old entries (or entire file) if you change something here. Module contains example script that can be used as a pattern.
+```
+nagios3::checks::script { 'apache_lines':
+    script_check  => 'present',
+    script_name   => 'check_script.sh',
+    script_path   => '/usr/lib/nagios/plugins',
+    contact_group => 'hosting-cs',
+    check_warn    => '0',
+    check_crit    => '0'
+  }
+```
+
+### default checks
+
+```
+class { '':
+    contact_group    => 'hosting-cs',
+    checktime_period => '24x7'
+  }
+```
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+* Main classes
+  * nagios3::client
+  * nagios3::checks
+  * nagios3::server
+* Checks classes
+  * apache2
+  * cassandra
+  * default checks
+  * hadoop    
+  * mysql
+  * postgresql
+  * rabbitmq
+  * smtp
+  * tomcat
+  * varnish
+* Defined types
+  * network port
+  * custom script
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
-
-## Development
-
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+Module is working on Ubuntu machines. It was not tested on Centos / RHEL. But who nows...? :)
